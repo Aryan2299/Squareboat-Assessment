@@ -1,0 +1,10 @@
+#login-form {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  padding: 100px 50px;
+  width: 60%;
+  margin: 10% 20%;
+  /* height: 100%; */
+}
+
