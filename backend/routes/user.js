@@ -10,7 +10,7 @@ require("../models/Cart");
 const router = express.Router();
 
 router.get("/orders", ordersController.getAllOrders);
-router.post("/orders/new", ordersController.placeNewOrder);
+// router.post("/orders/new", ordersController.placeNewOrder);
 router.get("/cart", cartController.getCart);
 router.post("/cart/add", cartController.addToCart);
 
