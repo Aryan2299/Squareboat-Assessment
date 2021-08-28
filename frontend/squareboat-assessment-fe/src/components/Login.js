@@ -2,10 +2,8 @@ import React from "react";
 import { Link, Redirect, Router, useHistory } from "react-router-dom";
 import "../styles/Login.css";
 
-const emailValidationRegExp = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
-
 const Login = (props) => {
-  const [email, setEmail] = React.useState("aryan.sharma@gmail.com");
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [redirect, setRedirect] = React.useState(false);
 

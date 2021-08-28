@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import "./App.css";
 import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 function App() {
   return (
@@ -66,7 +67,7 @@ function App() {
 
         <Switch>
           <Route path="/signup">
-            <h1>Sign Up</h1>
+            <SignUp />
           </Route>
           <Route path="/login">
             <Login />
