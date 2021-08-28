@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const orderSchema = new Schema({
-  orderedBy: {
+const cartSchema = new Schema({
+  user: {
     type: mongoose.Types.ObjectId,
     required: true,
   },
@@ -10,6 +10,10 @@ const orderSchema = new Schema({
     type: [Object],
     required: true,
   },
+  totalAmount: {
+    type: Number,
+    required: true,
+  },
 });
 
-mongoose.model("orders", orderSchema);
+mongoose.model("cart", cartSchema);

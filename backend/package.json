@@ -1,17 +1,21 @@
 {
-  "name": "squareboat",
+  "name": "varivas-assessment",
   "version": "1.0.0",
-  "description": "Squareboat assessment backend",
+  "description": "Varivas interview round 1",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "Aryan Sharma",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
+    "cookie-session": "^1.4.0",
     "express": "^4.17.1",
-    "mongoose": "^6.0.2",
-    "nodemon": "^2.0.12"
+    "mocha": "^9.0.3",
+    "mongoose": "^5.13.5",
+    "nodemon": "^2.0.12",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0"
   }
 }

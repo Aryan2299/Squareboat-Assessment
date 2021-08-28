@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
+const orderSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -14,6 +14,10 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  quantityAvailable: {
+    type: Number,
+    required: true,
+  },
 });
 
-mongoose.model("products", productSchema);
+mongoose.model("orders", orderSchema);

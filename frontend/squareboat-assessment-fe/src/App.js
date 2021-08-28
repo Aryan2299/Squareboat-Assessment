@@ -3,17 +3,22 @@ import { UserContext } from "./UserContext";
 import "./App.css";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import React from "react";
 
 function App() {
+  const [currentUser, setCurrentUser] = React.useState({
+    user: {
+      name: null,
+      email: null,
+    },
+  });
+
+  const userContext = React.useContext(UserContext);
+
+  React.useEffect(() => console.log("user: ", userContext), [currentUser]);
+
   return (
-    <UserContext.Provider
-      value={{
-        user: {
-          name: null,
-          email: null,
-        },
-      }}
-    >
+    <UserContext.Provider value={currentUser}>
       <Router>
         {/* <nav className="navbar sticky-top navbar-light bg-light">
           <div className="container-fluid">

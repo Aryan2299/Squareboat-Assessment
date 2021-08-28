@@ -1,18 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import "../styles/SignUp.css";
-import { UserContext } from "../UserContext";
-import { useAuthService } from "../utils/customHooks/authService";
-import matcher from "../utils/regExpMatchers";
 import ErrorAlert from "./ErrorAlert";
 
 const SignUp = () => {
-  const { emailMatcher, nameMatcher } = matcher;
+  //   const { emailMatcher, nameMatcher } = matcher;
 
-  const [name, setName] = React.useState({
-    firstName: "",
-    lastName: "",
-  });
+  const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [redirect, setRedirect] = React.useState(false);
@@ -26,25 +20,22 @@ const SignUp = () => {
       message: "Passwords do not match",
     });
 
-  const user = useAuthService(
-    {
-      name: { firstName: "John", lastName: "Doe" },
-      email: "email@example.com",
-      password: "password",
-    },
-    setShowInvalidEmailMsg,
-    setShowPasswordsDoNotMatchMsg
-  );
-  const userContext = useContext(UserContext);
+  //   const user = useAuth(
+  //     false,
+  //     {
+  //       name: { firstName: "John", lastName: "Doe" },
+  //       email: "email@example.com",
+  //       password: "password",
+  //     },
+  //     setShowInvalidEmailMsg,
+  //     setShowPasswordsDoNotMatchMsg
+  //   );
+  //   const userContext = useContext(UserContext);
 
   const history = useHistory();
 
-  const updateFirstName = (e) => {
-    setName({ ...name, firstName: e + " " });
-  };
-
-  const updateLastName = (e) => {
-    setName({ ...name, lastName: e });
+  const updateName = (e) => {
+    setName(e);
   };
 
   const updateEmail = (e) => {
@@ -75,19 +66,13 @@ const SignUp = () => {
       ) : (
         <ErrorAlert errorMessage={showPasswordsDoNotMatchMsg.message} />
       )}
-      <input
-        className="form-control"
-        type="first name"
-        aria-label="default input example"
-        placeholder="email"
-        onChange={(e) => updateFirstName(e.target.value)}
-      />
+
       <input
         className="form-control"
         type="last name"
         aria-label="default input example"
-        placeholder="password"
-        onChange={(e) => updateLastName(e.target.value)}
+        placeholder="text"
+        onChange={(e) => updateName(e.target.value)}
       />
       <input
         className="form-control"
@@ -114,10 +99,10 @@ const SignUp = () => {
         <button
           type="button"
           className="btn btn-light"
-          onClick={() => {
-            console.log(user);
-            console.log(userContext);
-          }}
+          //   onClick={() => {
+          //     console.log(user);
+          //     console.log(userContext);
+          //   }}
         >
           Sign Up
         </button>
