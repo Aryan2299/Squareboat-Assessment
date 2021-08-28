@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const orderSchema = new Schema({
+const productSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -18,6 +18,10 @@ const orderSchema = new Schema({
     type: Number,
     required: true,
   },
+  pricePerUnit: {
+    type: Number,
+    required: true,
+  },
 });
 
-mongoose.model("orders", orderSchema);
+mongoose.model("products", productSchema);
