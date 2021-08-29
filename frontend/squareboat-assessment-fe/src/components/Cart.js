@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 } from "uuid";
+import { addQuantitiesToProducts } from "../services/productService";
 import { checkoutFromCart, getCart, getProducts } from "../services/requests";
 import ProductCard from "./ProductCard";
 
@@ -18,8 +19,12 @@ const Cart = () => {
 
           getProducts(res.data.productIds)
             .then((res) => {
-              setProductsInCart(res.data);
-              console.log("products in cart ", res.data);
+              setProductsInCart(
+                addQuantitiesToProducts(
+                  res.data.productIdsWithQuantities,
+                  res.data.products
+                )
+              );
             })
             .catch((err) =>
               console.error("Error: Couldn't fetch products", err)
@@ -40,8 +45,14 @@ const Cart = () => {
       <h1>Total: INR {totalAmount}</h1>
       {productsInCart.map((product) => {
         return (
-          <li key={v4()}>
-            <ProductCard product={product} disableAddToCart={true} />
+          <li>
+            <ProductCard
+              product={product}
+              disableAddToCart={{
+                value: true,
+                quantity: product.quantity,
+              }}
+            />
           </li>
         );
       })}

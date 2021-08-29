@@ -7,6 +7,7 @@ import React from "react";
 import Orders from "./components/Orders";
 import Cart from "./components/Cart";
 import Products from "./components/Products";
+import OrderDetails from "./components/OrderDetails";
 
 function UserProvider({ children }) {
   const [user, setUser] = React.useState({
@@ -71,6 +72,9 @@ function App() {
         <Switch>
           <Route path="/cart">
             <Cart />
+          </Route>
+          <Route path="/orders/:id">
+            <OrderDetails />
           </Route>
           <Route path="/orders">
             <Orders />

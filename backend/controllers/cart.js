@@ -3,6 +3,8 @@ const Cart = mongoose.model("cart");
 const Product = mongoose.model("products");
 const Order = mongoose.model("orders");
 
+const orderService = require("../services/product");
+
 exports.getCart = (req, res, next) => {
   if (req.user) {
     console.log("Fetching cart for ", req.user.email);
@@ -75,6 +77,7 @@ exports.checkoutFromCart = (req, res, next) => {
           const newOrder = new Order({
             orderedBy: req.user._id,
             productIds: cart.productIds,
+            totalAmount: cart.totalAmount,
           });
           newOrder
             .save()

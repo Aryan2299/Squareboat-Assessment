@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Product = mongoose.model("products");
 
+const productService = require("../services/product");
+
 exports.getAllProducts = (req, res, next) => {
   Product.find()
     .then((products) => {
@@ -29,13 +31,15 @@ exports.addNewProduct = (product) => {
 
 exports.getProducts = (req, res, next) => {
   const productIds = req.body.productIds;
-  
+  let productIdsWithQuantities = productService.getQuantity(productIds);
+
+  console.log("quantities: ", productIdsWithQuantities);
   console.log("productIds received: ", productIds);
 
   Product.find({ _id: productIds })
     .then((products) => {
       console.log("products", products);
-      res.status(200).send(products);
+      res.status(200).send({ products, productIdsWithQuantities });
     })
     .catch((err) => {
       console.error("Error: Couldn't find products ");

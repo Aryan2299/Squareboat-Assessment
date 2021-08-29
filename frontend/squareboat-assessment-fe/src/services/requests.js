@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const dummyToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFuLnNoYXJtYUBnbWFpbC5jb20iLCJfaWQiOiI2MTJiNjNkOWZiZDljYWUwZDU3YmExNDIiLCJpYXQiOjE2MzAyNTYwNjAsImV4cCI6MTYzMDI1OTY2MH0.sC1qx97jvNfgBZjMmPlx664WTG-qSPdpEBq1hPlCROU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFuLnNoYXJtYUBnbWFpbC5jb20iLCJfaWQiOiI2MTJiNjNkOWZiZDljYWUwZDU3YmExNDIiLCJpYXQiOjE2MzAyNjMzMzMsImV4cCI6MTYzMDI2NjkzM30.bt_uS_l-vg4aOtgHteheQlRcCLnappK53r0lNSjRCvQ";
 
 export const sendLoginDetails = (payload) => {
   const { email, password } = payload;
@@ -27,6 +27,13 @@ export const getAllProducts = () => {
 export const getAllOrders = (token) => {
   console.log("token: ", token);
   return axios.get(`http://localhost:8080/user/orders?token=${dummyToken}`);
+};
+
+export const getOrderDetails = (token, orderId) => {
+  console.log("token: ", token);
+  return axios.get(
+    `http://localhost:8080/user/orders/${orderId}?token=${dummyToken}`
+  );
 };
 
 export const getProducts = (productIds) => {

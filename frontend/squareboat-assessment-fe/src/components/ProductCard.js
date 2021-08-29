@@ -4,7 +4,7 @@ import "../styles/ProductCard.css";
 
 const ProductCard = (props) => {
   const { _id, title, description, photo, pricePerUnit } = props.product;
-  const disableAddToCart = props.disableAddToCart;
+  const { value, quantity } = props.disableAddToCart;
 
   return (
     <div>
@@ -12,7 +12,7 @@ const ProductCard = (props) => {
       <h1>{title}</h1>
       <h2>{description}</h2>
       <p>INR {pricePerUnit}</p>
-      {!disableAddToCart ? (
+      {!value ? (
         <button
           type="button"
           onClick={() =>
@@ -25,7 +25,9 @@ const ProductCard = (props) => {
         >
           Add to Cart
         </button>
-      ) : null}
+      ) : (
+        <p>Quantity: {quantity}</p>
+      )}
     </div>
   );
 };
