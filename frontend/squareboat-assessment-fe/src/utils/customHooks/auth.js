@@ -23,9 +23,10 @@ export const useAuth = (
   if (forLogin) {
     // const res = await axios.post("http://localhost:8080")
 
-    if (password === "passwoed" && email === "email@example.com") {
-      userContext.name = "John Doe";
-      userContext.email = "email@example.com";
+    if (password === "passwod" && email === "email@example.com") {
+      // userContext.name = "John Doe";
+      // userContext.email = "email@example.com";
+
       return true;
     } else {
       return false;
@@ -33,8 +34,8 @@ export const useAuth = (
   } else {
     if (areDetailsValid === "valid") {
       // const res = await axios.post("http://localhost:8080");
-      userContext.name = "John Doe";
-      userContext.email = "email@example.com";
+      // userContext.name = "John Doe";
+      // userContext.email = "email@example.com";
     } else {
       return false;
     }

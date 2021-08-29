@@ -1,8 +1,8 @@
 import React from "react";
-import { getAllProducts, getProducts } from "../services/requests";
-import "../styles/Products.css";
+import { getAllProducts } from "../services/requests";
 import { v4 } from "uuid";
 import ProductCard from "./ProductCard";
+import "../styles/Products.css";
 
 const Products = () => {
   const [products, setProducts] = React.useState([]);
@@ -18,7 +18,7 @@ const Products = () => {
     []
   );
   return (
-    <div>
+    <div id="all-products">
       {products.map((product) => {
         return (
           <li key={v4()}>

@@ -1,6 +1,9 @@
-import axios from "axios";
 import React from "react";
-import { Link, Redirect, Router, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import {
+  redirectToHomePage,
+  redirectToSignUpPage,
+} from "../services/redirects";
 import { sendLoginDetails } from "../services/requests";
 import "../styles/Login.css";
 import { UserContext } from "../UserContext";
@@ -8,9 +11,6 @@ import { UserContext } from "../UserContext";
 const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [redirect, setRedirect] = React.useState(false);
-
-  const history = useHistory();
 
   const updateEmail = (e) => {
     setEmail(e);
@@ -20,30 +20,27 @@ const Login = (props) => {
     setPassword(e);
   };
 
-  const redirectToSignUpPage = () => {
-    history.push("/signup");
-  };
-
-  let userContext = React.useContext(UserContext);
+  const userContext = React.useContext(UserContext);
+  const history = useHistory();
 
   const loginUser = () => {
     sendLoginDetails({ email: email, password: password })
-      .then((resp) => {
-        if (resp.status === 200) {
-          const { _id, name, email, token } = resp.data;
+      .then((res) => {
+        if (res.status === 200) {
+          const { _id, name, email, token } = res.data;
+          console.log("user: ", res.data);
           userContext.setUser({
-            id: _id,
+            _id: _id,
             name: name,
             email: email,
             token: token,
           });
-          setRedirect(true);
+          redirectToHomePage(history);
         }
       })
       .catch((err) => console.error("Error: Couldn't login", err));
   };
 
-  React.useEffect(() => console.log("user: ", userContext), [userContext]);
   return (
     <div id="login-form" className="card text-white bg-dark mb-3 row">
       <input
@@ -61,11 +58,11 @@ const Login = (props) => {
         placeholder="password"
         onChange={(e) => updatePassword(e.target.value)}
       />
-      <div classNameName="row">
+      <div ame="row">
         <button
           type="button"
           className="btn btn-light"
-          onClick={redirectToSignUpPage}
+          onClick={() => redirectToSignUpPage(history)}
         >
           Sign Up
         </button>
@@ -77,8 +74,6 @@ const Login = (props) => {
         >
           Login
         </button>
-
-        {redirect ? <Redirect to="/" /> : null}
       </div>
     </div>
   );

@@ -1,8 +1,5 @@
 import axios from "axios";
 
-const dummyToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFuLnNoYXJtYUBnbWFpbC5jb20iLCJfaWQiOiI2MTJiNjNkOWZiZDljYWUwZDU3YmExNDIiLCJpYXQiOjE2MzAyNjcxOTIsImV4cCI6MTYzMDI3MDc5Mn0.RSrC5Sxl6EjuF0c8no6sl6_3346kAkqB39aSsDXQ7MQ";
-
 export const sendLoginDetails = (payload) => {
   const { email, password } = payload;
   return axios.post("http://localhost:8080/auth/login", {
@@ -38,7 +35,7 @@ export const getAllOrders = (token) => {
 export const getOrderDetails = (token, orderId) => {
   console.log("token: ", token);
   return axios.get(
-    `http://localhost:8080/user/orders/${orderId}?token=${dummyToken}`
+    `http://localhost:8080/user/orders/${orderId}?token=${token}`
   );
 };
 
@@ -47,17 +44,15 @@ export const getProducts = (productIds) => {
 };
 
 export const getCart = (token) => {
-  return axios.get(`http://localhost:8080/user/cart?token=${dummyToken}`);
+  return axios.get(`http://localhost:8080/user/cart?token=${token}`);
 };
 
-export const addToCart = (productId) => {
-  return axios.post(`http://localhost:8080/user/cart/add?token=${dummyToken}`, {
+export const addToCart = (productId, token) => {
+  return axios.post(`http://localhost:8080/user/cart/add?token=${token}`, {
     productId,
   });
 };
 
 export const checkoutFromCart = (token) => {
-  return axios.get(
-    `http://localhost:8080/user/cart/checkout?token=${dummyToken}`
-  );
+  return axios.get(`http://localhost:8080/user/cart/checkout?token=${token}`);
 };

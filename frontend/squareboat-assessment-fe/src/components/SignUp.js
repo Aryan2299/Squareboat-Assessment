@@ -1,5 +1,6 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { redirectToLoginPage } from "../services/redirects";
 import { sendSignUpDetails } from "../services/requests";
 import "../styles/SignUp.css";
 import { UserContext } from "../UserContext";
@@ -11,8 +12,7 @@ const SignUp = (props) => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [redirect, setRedirect] = React.useState(false);
-  const [showInvalidEmailMsg, setShowInvalidEmailMsg] = React.useState({
+  const [showInvalidEmailMsg] = React.useState({
     value: false,
     message: "Please enter a valid email address ",
   });
@@ -56,18 +56,20 @@ const SignUp = (props) => {
     }
   };
 
-  const redirectToLoginPage = () => {
-    history.push("/login");
-  };
-
-  let userContext = React.useContext(UserContext);
+  const userContext = React.useContext(UserContext);
 
   const getUser = () => {
     sendSignUpDetails({ name, email, password })
-      .then((resp) => {
-        if (resp.status === 200) {
-          userContext = resp.data;
-          console.log("data: ", resp.data);
+      .then((res) => {
+        if (res.status === 200) {
+          const { _id, name, email, token } = res.data;
+          userContext.setUser({
+            _id: _id,
+            name: name,
+            email: email,
+            token: token,
+          });
+          console.log("data: ", res.data);
         }
       })
       .catch((err) => console.error("Error: Couldn't login", err));
@@ -110,28 +112,18 @@ const SignUp = (props) => {
         placeholder="confirm password"
         onChange={(e) => confirmPassword(e.target.value)}
       />
-      <div classNameName="row">
-        <button
-          type="button"
-          className="btn btn-light"
-          //   onClick={() => {
-          //     console.log(user);
-          //     console.log(userContext);
-          //   }}
-          onClick={getUser}
-        >
+      <div className="row">
+        <button type="button" className="btn btn-light" onClick={getUser}>
           Sign Up
         </button>
 
         <button
           className="btn btn-primary col"
           type="button"
-          onClick={redirectToLoginPage}
+          onClick={() => redirectToLoginPage(history)}
         >
           Login
         </button>
-
-        {redirect ? <Redirect to="/" /> : null}
       </div>
     </div>
   );

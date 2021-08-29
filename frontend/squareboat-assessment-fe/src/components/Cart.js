@@ -1,45 +1,57 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { v4 } from "uuid";
 import { addQuantitiesToProducts } from "../services/productService";
+import {
+  redirectToLoginPage,
+  redirectToOrdersPage,
+} from "../services/redirects";
 import { checkoutFromCart, getCart, getProducts } from "../services/requests";
+import { UserContext } from "../UserContext";
 import ProductCard from "./ProductCard";
+// import "./styles/Products.css";
+// import "../styles/ProductCards.css";
 
 const Cart = () => {
   const [totalAmount, setTotalAmount] = React.useState();
   const [productsInCart, setProductsInCart] = React.useState([]);
-  const [redirect, setRedirect] = React.useState(false);
 
-  React.useEffect(
-    () =>
-      getCart()
-        .then((res) => {
-          if (res.status === 200) {
-            setTotalAmount(res.data.totalAmount);
-            console.log("cart", res.data);
+  const userContext = React.useContext(UserContext);
+  const history = useHistory();
 
-            console.log("prods: ", res.data.productIds);
+  React.useEffect(() => {
+    if (userContext.user.email === null) {
+      redirectToLoginPage(history);
+    }
+    getCart(userContext.user.token)
+      .then((res) => {
+        if (res.status === 200) {
+          setTotalAmount(res.data.totalAmount);
+          console.log("cart", res.data);
 
-            getProducts(res.data.productIds)
-              .then((res) => {
-                setProductsInCart(
-                  addQuantitiesToProducts(
-                    res.data.productIdsWithQuantities,
-                    res.data.products
-                  )
-                );
-              })
-              .catch((err) =>
-                console.error("Error: Couldn't fetch products", err)
+          console.log("prods: ", res.data.productIds);
+
+          getProducts(res.data.productIds)
+            .then((res) => {
+              setProductsInCart(
+                addQuantitiesToProducts(
+                  res.data.productIdsWithQuantities,
+                  res.data.products
+                )
               );
-          } else if (res.status === 401) {
-            setRedirect(true);
-          } else if (res.status === 409) {
-          }
-        })
-        .catch((err) => console.error("Error: Couldn't fetch cart", err)),
-    []
-  );
+            })
+            .catch((err) =>
+              console.error("Error: Couldn't fetch products", err)
+            );
+
+          redirectToOrdersPage(history);
+        } else if (res.status === 401) {
+          redirectToLoginPage(history);
+        } else if (res.status === 409) {
+        }
+      })
+      .catch((err) => console.error("Error: Couldn't fetch cart", err));
+  }, [userContext]);
 
   const emptyCart = () => {
     setProductsInCart([]);
@@ -47,7 +59,7 @@ const Cart = () => {
   };
 
   const checkout = () => {
-    checkoutFromCart()
+    checkoutFromCart(userContext.user.token)
       .then((res) => {
         console.log("checked out\n", res.data);
         emptyCart();
@@ -55,15 +67,15 @@ const Cart = () => {
       .catch((err) => console.error("Error: Couldn't checkout", err));
   };
 
-  return !redirect ? (
-    <div>
+  return (
+    <div id="all-products">
       <h1>Total: INR {totalAmount}</h1>
       <button type="button" onClick={emptyCart}>
         Empty Cart
       </button>
       {productsInCart.map((product) => {
         return (
-          <li>
+          <li key={v4()}>
             <ProductCard
               product={product}
               disableAddToCart={{
@@ -78,8 +90,6 @@ const Cart = () => {
         Checkout
       </button>
     </div>
-  ) : (
-    <Redirect to="/login" />
   );
 };
 

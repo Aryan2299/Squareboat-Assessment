@@ -8,11 +8,11 @@ import Orders from "./components/Orders";
 import Cart from "./components/Cart";
 import Products from "./components/Products";
 import OrderDetails from "./components/OrderDetails";
-import { logoutUser } from "./services/requests";
+import Logout from "./components/Logout";
 
 const USER_STATE = {
   user: {
-    id: null,
+    _id: null,
     name: null,
     email: null,
     token: null,
@@ -30,15 +30,18 @@ function UserProvider({ children }) {
 
 function App() {
   return (
-    <Router>
-      <UserProvider>
-        <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+    <UserProvider>
+      <Router>
+        <nav
+          id="navbar"
+          className="navbar navbar-expand-lg navbar-light bg-light"
+        >
+          <div className="container-fluid">
+            <a className="navbar-brand" href="/">
               Home
             </a>
             <button
-              class="navbar-toggler"
+              className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNav"
@@ -46,37 +49,27 @@ function App() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span class="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="/login">
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
                     Login/Sign Up
-                  </a>
+                  </Link>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/orders">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/orders">
                     Orders
-                  </a>
+                  </Link>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/cart">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/cart">
                     Cart
-                  </a>
+                  </Link>
                 </li>
-                <li class="nav-item">
-                  <button
-                    onClick={() =>
-                      logoutUser("612b63d9fbd9cae0d57ba142")
-                        .then((res) => console.log(res.data))
-                        .catch((err) =>
-                          console.error("Error: Couldn't logout user", err)
-                        )
-                    }
-                  >
-                    Logout
-                  </button>
+                <li className="nav-item">
+                  <Logout />
                 </li>
               </ul>
             </div>
@@ -102,8 +95,8 @@ function App() {
             <Products />
           </Route>
         </Switch>
-      </UserProvider>
-    </Router>
+      </Router>
+    </UserProvider>
   );
 }
 
