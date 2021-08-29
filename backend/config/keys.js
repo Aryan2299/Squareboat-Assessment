@@ -5,7 +5,5 @@ module.exports = {
   mongoURI:
     "mongodb+srv://aryan1939:admin@cluster0.rp7ef.mongodb.net/e_commerce",
   cookieKey: "kasjdfkjahdsguiadgnmadhgdjfhddhueaqdqnuasdhalaiwwhe",
-  postmanClientID:
-    "473512430308-bl0t70383e4f1tb3brbv8ssei1jl0qjq.apps.googleusercontent.com",
-  postmanClientSecret: "1hrKEsqW8cJWkRNlI9cv-o8M",
+  tokenSecret: "supersecrettokenkey",
 };

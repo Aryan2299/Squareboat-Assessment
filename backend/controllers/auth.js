@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const User = mongoose.model("users");
 const jwt = require("jsonwebtoken");
+const { tokenSecret } = require("../config/keys");
 
 exports.postSignUp = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -23,7 +24,7 @@ exports.postSignUp = async (req, res, next) => {
         password: encryptedPassword,
       });
 
-      const newToken = jwt.sign({ email: email }, "secret", {
+      const newToken = jwt.sign({ email: email }, tokenSecret, {
         expiresIn: "1h",
       });
 
@@ -60,7 +61,9 @@ exports.postLogin = async (req, res, next) => {
         }
       });
 
-      const newToken = jwt.sign({ email }, "secret", { expiresIn: "1h" });
+      const newToken = jwt.sign({ email, _id: existingUser._id }, tokenSecret, {
+        expiresIn: "1h",
+      });
 
       existingUser.token = newToken;
     })

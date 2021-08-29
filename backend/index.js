@@ -31,23 +31,25 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 
 const { addNewProduct, getAllProducts } = require("./controllers/product");
+const isAuth = require("./middleware/isAuth");
 
 app.use(authRoutes);
 app.use("/user", userRoutes);
+app.use("/secret", isAuth, (req, res) => res.send("secret"));
 app.use("/", getAllProducts);
 
 //seed data
-Product.countDocuments().then((count) => {
-  if (count === 0) {
-    addNewProduct({
-      title: "New Product",
-      photo: "https://some-url.com/google/image?id=123",
-      description: "Sample product",
-      quantityAvailable: 10,
-      pricePerUnit: 100
-    });
-  }
-});
+// Product.countDocuments().then((count) => {
+//   if (count === 0) {
+//     addNewProduct({
+//       title: "New Product",
+//       photo: "https://some-url.com/google/image?id=123",
+//       description: "Sample product",
+//       quantityAvailable: 10,
+//       pricePerUnit: 100,
+//     });
+//   }
+// });
 
 app.listen(8080, () => {
   console.log("Listening on port 8080...");
