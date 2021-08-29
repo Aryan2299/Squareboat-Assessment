@@ -14,10 +14,6 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
-  quantityAvailable: {
-    type: Number,
-    required: true,
-  },
   pricePerUnit: {
     type: Number,
     required: true,

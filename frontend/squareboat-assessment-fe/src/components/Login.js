@@ -1,6 +1,9 @@
+import axios from "axios";
 import React from "react";
 import { Link, Redirect, Router, useHistory } from "react-router-dom";
+import { sendLoginDetails } from "../services/requests";
 import "../styles/Login.css";
+import { UserContext } from "../UserContext";
 
 const Login = (props) => {
   const [email, setEmail] = React.useState("");
@@ -21,6 +24,21 @@ const Login = (props) => {
     history.push("/signup");
   };
 
+  let userContext = React.useContext(UserContext);
+
+  const loginUser = () => {
+    sendLoginDetails({ email: email, password: password })
+      .then((resp) => {
+        if (resp.status === 200) {
+          const { _id, name, email, token } = resp.data;
+          userContext.setUser({ id: _id, name, email, token });
+          //   console.log("data: ", resp.data);
+        }
+      })
+      .catch((err) => console.error("Error: Couldn't login", err));
+  };
+
+  React.useEffect(() => console.log("user: ", userContext), [userContext]);
   return (
     <div id="login-form" className="card text-white bg-dark mb-3 row">
       <input
@@ -47,8 +65,15 @@ const Login = (props) => {
           Sign Up
         </button>
 
-        <button className="btn btn-primary col" type="button">
+        <button
+          className="btn btn-primary col"
+          type="button"
+          onClick={loginUser}
+        >
           Login
+        </button>
+        <button onClick={() => console.log("user: ", userContext)}>
+          Token
         </button>
 
         {redirect ? <Redirect to="/" /> : null}

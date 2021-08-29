@@ -1,9 +1,11 @@
 import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
+import { sendSignUpDetails } from "../services/requests";
 import "../styles/SignUp.css";
+import { UserContext } from "../UserContext";
 import ErrorAlert from "./ErrorAlert";
 
-const SignUp = () => {
+const SignUp = (props) => {
   //   const { emailMatcher, nameMatcher } = matcher;
 
   const [name, setName] = React.useState("");
@@ -58,6 +60,19 @@ const SignUp = () => {
     history.push("/login");
   };
 
+  let userContext = React.useContext(UserContext);
+
+  const getUser = () => {
+    sendSignUpDetails({ name, email, password })
+      .then((resp) => {
+        if (resp.status === 200) {
+          userContext = resp.data;
+          console.log("data: ", resp.data);
+        }
+      })
+      .catch((err) => console.error("Error: Couldn't login", err));
+  };
+
   return (
     <div id="login-form" className="card text-white bg-dark mb-3 row">
       {showInvalidEmailMsg.value &&
@@ -103,6 +118,7 @@ const SignUp = () => {
           //     console.log(user);
           //     console.log(userContext);
           //   }}
+          onClick={getUser}
         >
           Sign Up
         </button>

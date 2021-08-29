@@ -4,44 +4,33 @@ import "./App.css";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import React from "react";
+import Orders from "./components/Orders";
+import Cart from "./components/Cart";
+import Products from "./components/Products";
 
-function App() {
-  const [currentUser, setCurrentUser] = React.useState({
-    user: {
-      name: null,
-      email: null,
-    },
+function UserProvider({ children }) {
+  const [user, setUser] = React.useState({
+    id: null,
+    name: null,
+    email: null,
+    token: null,
   });
 
-  const userContext = React.useContext(UserContext);
-
-  React.useEffect(() => console.log("user: ", userContext), [currentUser]);
+  React.useEffect(() => {
+    console.log("logged in user: ", user);
+  }, [user]);
 
   return (
-    <UserContext.Provider value={currentUser}>
-      <Router>
-        {/* <nav className="navbar sticky-top navbar-light bg-light">
-          <div className="container-fluid">
-            <Link to="/" className="navbar-brand" aria-current="page">
-              Home
-            </Link>
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
 
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <Link to="/login">Login</Link>
-            </div>
-          </div>
-        </nav> */}
+function App() {
+  return (
+    <UserProvider>
+      <Router>
         <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
             <a class="navbar-brand" href="/">
@@ -65,24 +54,40 @@ function App() {
                     Login
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/orders">
+                    Orders
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/cart">
+                    Cart
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
         </nav>
-
         <Switch>
+          <Route path="/cart">
+            <Cart />
+          </Route>
+          <Route path="/orders">
+            <Orders />
+          </Route>
           <Route path="/signup">
             <SignUp />
           </Route>
+          <Route path="/logout"></Route>
           <Route path="/login">
             <Login />
           </Route>
           <Route path="/">
-            <h1>Home</h1>
+            <Products />
           </Route>
         </Switch>
       </Router>
-    </UserContext.Provider>
+    </UserProvider>
   );
 }
 

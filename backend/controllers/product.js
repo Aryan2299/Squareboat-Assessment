@@ -12,14 +12,12 @@ exports.getAllProducts = (req, res, next) => {
 };
 
 exports.addNewProduct = (product) => {
-  const { title, photo, description, quantityAvailable, pricePerUnit } =
-    product;
+  const { title, photo, description, pricePerUnit } = product;
 
   const newProduct = new Product({
     title,
     photo,
     description,
-    quantityAvailable,
     pricePerUnit,
   });
 
@@ -27,4 +25,18 @@ exports.addNewProduct = (product) => {
     .save()
     .then((product) => console.log("Saved product: ", product))
     .catch((err) => console.error("Error: Failed to save "));
+};
+
+exports.getProducts = (req, res, next) => {
+  const productIds = req.body.productIds;
+  console.log("productIds received: ", productIds);
+
+  Product.find({ _id: productIds })
+    .then((products) => {
+      console.log("products", products);
+      res.status(200).send(products);
+    })
+    .catch((err) => {
+      console.error("Error: Couldn't find products ");
+    });
 };

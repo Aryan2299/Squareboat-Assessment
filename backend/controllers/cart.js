@@ -5,7 +5,7 @@ const Order = mongoose.model("orders");
 
 exports.getCart = (req, res, next) => {
   if (req.user) {
-    Cart.findOne({ user: req.user._id })
+    Cart.findOne({ userId: req.user._id })
       .then((cart) => {
         res.status(200).send(cart);
       })
@@ -19,55 +19,26 @@ exports.getCart = (req, res, next) => {
 
 exports.addToCart = async (req, res, next) => {
   if (req.user) {
-    const { incomingProduct } = req.body;
-    console.log("user id: ", req.user._id);
+    const productId = req.body.productId;
+    Product.findById(productId)
+      .then((product) => {
+        console.log("product: ", product);
+        Cart.findOne({ userId: req.user._id }).then((cart) => {
+          if (!cart) {
+            const userCart = new Cart({
+              userId: req.user._id,
+              products: new Array(1).fill(productId),
+              totalAmount: product.pricePerUnit,
+            });
 
-    Product.findById(incomingProduct._id)
-      .then(async (existingProduct) => {
-        console.log("existing product's ppu: ", existingProduct);
-        await Cart.findOne({ user: req.user._id })
-          .then((cart) => {
-            console.log("cart: ", cart);
-            console.log(
-              "quantity: ",
-              incomingProduct.quantity,
-              typeof incomingProduct.quantity
-            );
-            console.log(
-              "existing product's ppu: ",
-              existingProduct.pricePerUnit,
-              typeof existingProduct.pricePerUnit
-            );
-
-            if (!cart) {
-              const userCart = new Cart({
-                user: req.user._id,
-                products: new Array(1).fill({
-                  _id: incomingProduct._id,
-                  quantity: incomingProduct.quantity,
-                }),
-                totalAmount:
-                  incomingProduct.quantity * existingProduct.pricePerUnit,
-              });
-
-              userCart.save();
-            } else {
-              cart.totalAmount +=
-                +incomingProduct.quantity * existingProduct.pricePerUnit;
-              cart.products.push({
-                _id: incomingProduct._id,
-                quantity: +incomingProduct.quantity,
-              });
-              cart.save();
-            }
-          })
-          .then(() => res.status(200).send())
-          .catch((err) => {
-            console.log(err);
-            res
-              .status(500)
-              .send({ error: "Couldn't add to cart", details: err });
-          });
+            userCart.save();
+          } else {
+            cart.totalAmount += product.pricePerUnit;
+            cart.products.push(productId);
+            cart.save();
+          }
+          res.status(200).send("Saved to cart");
+        });
       })
       .catch((err) =>
         res.status(500).send({ error: "Couldn't find product", details: err })
@@ -79,8 +50,7 @@ exports.addToCart = async (req, res, next) => {
 
 exports.checkoutFromCart = (req, res, next) => {
   if (req.user) {
-    let orderId;
-    Cart.findOne({ user: req.user._id })
+    Cart.findOne({ userId: req.user._id })
       .then((cart) => {
         console.log("products: ", cart.products);
         if (cart.products.length === 0 || cart.totalAmount === 0) {
