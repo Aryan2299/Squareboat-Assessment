@@ -31,7 +31,12 @@ const Login = (props) => {
       .then((resp) => {
         if (resp.status === 200) {
           const { _id, name, email, token } = resp.data;
-          userContext.setUser({ id: _id, name, email, token });
+          userContext.setUser({
+            id: _id,
+            name: name,
+            email: email,
+            token: token,
+          });
           setRedirect(true);
         }
       })

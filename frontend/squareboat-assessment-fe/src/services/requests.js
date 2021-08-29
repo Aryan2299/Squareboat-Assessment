@@ -32,7 +32,7 @@ export const getAllProducts = () => {
 
 export const getAllOrders = (token) => {
   console.log("token: ", token);
-  return axios.get(`http://localhost:8080/user/orders?token=${dummyToken}`);
+  return axios.get(`http://localhost:8080/user/orders?token=${token}`);
 };
 
 export const getOrderDetails = (token, orderId) => {

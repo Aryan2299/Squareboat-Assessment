@@ -10,29 +10,28 @@ import Products from "./components/Products";
 import OrderDetails from "./components/OrderDetails";
 import { logoutUser } from "./services/requests";
 
-function UserProvider({ children }) {
-  const [user, setUser] = React.useState({
+const USER_STATE = {
+  user: {
     id: null,
     name: null,
     email: null,
     token: null,
-  });
+  },
+  setUser: function (user) {
+    this.user = user;
+  },
+};
 
-  React.useEffect(() => {
-    console.log("logged in user: ", user);
-  }, [user]);
-
+function UserProvider({ children }) {
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={USER_STATE}>{children}</UserContext.Provider>
   );
 }
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
+    <Router>
+      <UserProvider>
         <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
             <a class="navbar-brand" href="/">
@@ -103,8 +102,8 @@ function App() {
             <Products />
           </Route>
         </Switch>
-      </Router>
-    </UserProvider>
+      </UserProvider>
+    </Router>
   );
 }
 

@@ -8,8 +8,11 @@ const Orders = () => {
   const [orders, setOrders] = React.useState([]);
   const [redirect, setRedirect] = React.useState(false);
 
+  const userContext = React.useContext(UserContext);
+
   React.useEffect(() => {
-    getAllOrders()
+    console.log("userContext", userContext);
+    getAllOrders(userContext.user.token)
       .then((res) => {
         console.log("response: ", res);
         if (res.status === 200) {
