@@ -16,7 +16,7 @@ const ProductCard = (props) => {
         <button
           type="button"
           onClick={() =>
-            addToCart(props.product, 10)
+            addToCart(props.product)
               .then((resp) => console.log("resp: ", resp.data))
               .catch((err) =>
                 console.error("Error: Coulddn't add to cart", err)

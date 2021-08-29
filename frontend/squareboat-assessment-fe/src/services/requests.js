@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const dummyToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWlsQGV4YW1wbGUuY29tIiwiX2lkIjoiNjEyYWI5Y2U4YWIwZGFjNjQ0YTJkZWVhIiwiaWF0IjoxNjMwMjUyMzE0LCJleHAiOjE2MzAyNTU5MTR9.6y8ygf_v_ncQXSTSyUoavDvomqE-2YA_frMAmadg8CI";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFuLnNoYXJtYUBnbWFpbC5jb20iLCJfaWQiOiI2MTJiNjNkOWZiZDljYWUwZDU3YmExNDIiLCJpYXQiOjE2MzAyNTYwNjAsImV4cCI6MTYzMDI1OTY2MH0.sC1qx97jvNfgBZjMmPlx664WTG-qSPdpEBq1hPlCROU";
 
 export const sendLoginDetails = (payload) => {
   const { email, password } = payload;
@@ -37,9 +37,9 @@ export const getCart = (token) => {
   return axios.get(`http://localhost:8080/user/cart?token=${dummyToken}`);
 };
 
-export const addToCart = (payload, quantity) => {
+export const addToCart = (productId) => {
   return axios.post(`http://localhost:8080/user/cart/add?token=${dummyToken}`, {
-    incomingProduct: { ...payload, quantity },
+    productId,
   });
 };
 

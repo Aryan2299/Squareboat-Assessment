@@ -5,9 +5,23 @@ const Order = mongoose.model("orders");
 
 exports.getCart = (req, res, next) => {
   if (req.user) {
+    console.log("Fetching cart for ", req.user.email);
+
     Cart.findOne({ userId: req.user._id })
       .then((cart) => {
-        res.status(200).send(cart);
+        if (!cart) {
+          const userCart = new Cart({
+            userId: req.user._id,
+            products: [],
+            totalAmount: 0,
+          });
+
+          userCart.save();
+          res.status(200).send(userCart);
+        } else {
+          res.status(200).send(cart);
+        }
+        // res.status(200).send(cart);
       })
       .catch((err) =>
         res.status(500).send({ error: "Couldn't get cart", details: err })

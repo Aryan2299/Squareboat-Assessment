@@ -10,7 +10,7 @@ const Cart = () => {
   React.useEffect(
     () =>
       getCart()
-        .then(async (res) => {
+        .then((res) => {
           setCart(res.data);
           console.log("cart", res.data);
 
