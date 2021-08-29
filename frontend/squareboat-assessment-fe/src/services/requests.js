@@ -1,13 +1,19 @@
 import axios from "axios";
 
 const dummyToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFuLnNoYXJtYUBnbWFpbC5jb20iLCJfaWQiOiI2MTJiNjNkOWZiZDljYWUwZDU3YmExNDIiLCJpYXQiOjE2MzAyNjMzMzMsImV4cCI6MTYzMDI2NjkzM30.bt_uS_l-vg4aOtgHteheQlRcCLnappK53r0lNSjRCvQ";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFuLnNoYXJtYUBnbWFpbC5jb20iLCJfaWQiOiI2MTJiNjNkOWZiZDljYWUwZDU3YmExNDIiLCJpYXQiOjE2MzAyNjcxOTIsImV4cCI6MTYzMDI3MDc5Mn0.RSrC5Sxl6EjuF0c8no6sl6_3346kAkqB39aSsDXQ7MQ";
 
 export const sendLoginDetails = (payload) => {
   const { email, password } = payload;
   return axios.post("http://localhost:8080/auth/login", {
     email,
     password,
+  });
+};
+
+export const logoutUser = (userId) => {
+  return axios.post("http://localhost:8080/auth/logout", {
+    userId,
   });
 };
 

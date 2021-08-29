@@ -80,3 +80,13 @@ exports.postLogin = async (req, res, next) => {
       res.status(500).send({ error: "Coudln't login user.", details: err })
     );
 };
+
+exports.postLogout = (req, res, next) => {
+  const userId = req.body.userId;
+  User.findById(userId).then((user) => {
+    user.token = "";
+    req.user = null;
+    user.save();
+    res.status(200).send("Logged out successfully");
+  });
+};

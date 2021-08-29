@@ -8,6 +8,7 @@ import Orders from "./components/Orders";
 import Cart from "./components/Cart";
 import Products from "./components/Products";
 import OrderDetails from "./components/OrderDetails";
+import { logoutUser } from "./services/requests";
 
 function UserProvider({ children }) {
   const [user, setUser] = React.useState({
@@ -52,7 +53,7 @@ function App() {
               <ul class="navbar-nav">
                 <li class="nav-item">
                   <a class="nav-link" href="/login">
-                    Login
+                    Login/Sign Up
                   </a>
                 </li>
                 <li class="nav-item">
@@ -64,6 +65,19 @@ function App() {
                   <a class="nav-link" href="/cart">
                     Cart
                   </a>
+                </li>
+                <li class="nav-item">
+                  <button
+                    onClick={() =>
+                      logoutUser("612b63d9fbd9cae0d57ba142")
+                        .then((res) => console.log(res.data))
+                        .catch((err) =>
+                          console.error("Error: Couldn't logout user", err)
+                        )
+                    }
+                  >
+                    Logout
+                  </button>
                 </li>
               </ul>
             </div>
@@ -82,7 +96,6 @@ function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
-          <Route path="/logout"></Route>
           <Route path="/login">
             <Login />
           </Route>

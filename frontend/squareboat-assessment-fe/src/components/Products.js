@@ -20,7 +20,14 @@ const Products = () => {
   return (
     <div>
       {products.map((product) => {
-        return <ProductCard product={product} disableAddToCart={false} />;
+        return (
+          <li key={v4()}>
+            <ProductCard
+              product={product}
+              disableAddToCart={{ value: false }}
+            />
+          </li>
+        );
       })}
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { v4 } from "uuid";
 import { addQuantitiesToProducts } from "../services/productService";
 import { getOrderDetails, getProducts } from "../services/requests";
@@ -10,23 +10,30 @@ const OrderDetails = () => {
 
   const [orderDetails, setOrderDetails] = React.useState({});
   const [productsOrdered, setProductsOrdered] = React.useState([]);
+  const [redirect, setRedirect] = React.useState(false);
 
   React.useEffect(() => {
     getOrderDetails("orderId: ", orderId.id)
       .then((res) => {
-        setOrderDetails(res.data);
-        console.log("order details: ", res.data);
+        if (res.status === 200) {
+          setOrderDetails(res.data);
+          console.log("order details: ", res.data);
 
-        getProducts(res.data.productIds)
-          .then((res) => {
-            setProductsOrdered(
-              addQuantitiesToProducts(
-                res.data.productIdsWithQuantities,
-                res.data.products
-              )
+          getProducts(res.data.productIds)
+            .then((res) => {
+              setProductsOrdered(
+                addQuantitiesToProducts(
+                  res.data.productIdsWithQuantities,
+                  res.data.products
+                )
+              );
+            })
+            .catch((err) =>
+              console.error("Error: Couldn't fetch products", err)
             );
-          })
-          .catch((err) => console.error("Error: Couldn't fetch products", err));
+        } else if (res.status === 401) {
+          setRedirect(true);
+        }
       })
       .catch((err) =>
         console.error("Error: Couldn't fetch order details", err)
@@ -34,7 +41,7 @@ const OrderDetails = () => {
     console.log("orderId: ", orderId.id);
   }, []);
 
-  return (
+  return !redirect ? (
     <div>
       <h1>{orderDetails._id}</h1>
       <h4>{orderDetails.orderedOn}</h4>
@@ -56,6 +63,8 @@ const OrderDetails = () => {
         })}
       </ul>
     </div>
+  ) : (
+    <Redirect to="/login" />
   );
 };
 

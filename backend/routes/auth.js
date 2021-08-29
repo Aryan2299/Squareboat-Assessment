@@ -38,6 +38,8 @@ router.post(
 
 router.post("/auth/signup", authController.postSignUp);
 
+router.post("/auth/logout", authController.postLogout);
+
 router.get("/api/current_user", (req, res) => {
   res.send(req.user);
 });

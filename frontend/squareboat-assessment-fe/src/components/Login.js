@@ -32,7 +32,7 @@ const Login = (props) => {
         if (resp.status === 200) {
           const { _id, name, email, token } = resp.data;
           userContext.setUser({ id: _id, name, email, token });
-          //   console.log("data: ", resp.data);
+          setRedirect(true);
         }
       })
       .catch((err) => console.error("Error: Couldn't login", err));
@@ -71,9 +71,6 @@ const Login = (props) => {
           onClick={loginUser}
         >
           Login
-        </button>
-        <button onClick={() => console.log("user: ", userContext)}>
-          Token
         </button>
 
         {redirect ? <Redirect to="/" /> : null}
