@@ -29,6 +29,7 @@ exports.addNewProduct = (product) => {
 
 exports.getProducts = (req, res, next) => {
   const productIds = req.body.productIds;
+  
   console.log("productIds received: ", productIds);
 
   Product.find({ _id: productIds })

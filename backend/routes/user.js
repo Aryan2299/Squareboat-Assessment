@@ -11,6 +11,7 @@ require("../models/Cart");
 const router = express.Router();
 
 router.get("/orders", isAuth, ordersController.getAllOrders);
+router.post("/orders/new", isAuth, ordersController.placeNewOrder);
 // router.post("/orders/new", ordersController.placeNewOrder);
 router.get("/cart", isAuth, cartController.getCart);
 router.post("/cart/add", isAuth, cartController.addToCart);

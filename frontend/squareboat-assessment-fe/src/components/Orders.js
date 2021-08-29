@@ -3,16 +3,17 @@ import { getAllOrders } from "../services/requests";
 import { UserContext } from "../UserContext";
 
 const Orders = () => {
-  const userContext = React.useContext(UserContext);
-  const { token } = userContext.user;
+  const [orders, setOrders] = React.useState([]);
 
-  React.useEffect(
-    () =>
-      getAllOrders(token)
-        .then((resp) => console.log("orders: ", resp.data))
-        .catch((err) => console.log("Error: Couldn't get orders", err)),
-    []
-  );
+  React.useEffect(() => {
+    getAllOrders()
+      .then((res) => {
+        const orderIds = res.data;
+        
+        console.log("orders: ", res.data);
+      })
+      .catch((err) => console.log("Error: Couldn't get orders", err));
+  }, []);
 
   return <div></div>;
 };

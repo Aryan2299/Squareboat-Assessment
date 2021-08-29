@@ -12,7 +12,7 @@ exports.getCart = (req, res, next) => {
         if (!cart) {
           const userCart = new Cart({
             userId: req.user._id,
-            products: [],
+            productIds: [],
             totalAmount: 0,
           });
 
@@ -21,7 +21,6 @@ exports.getCart = (req, res, next) => {
         } else {
           res.status(200).send(cart);
         }
-        // res.status(200).send(cart);
       })
       .catch((err) =>
         res.status(500).send({ error: "Couldn't get cart", details: err })
@@ -41,14 +40,14 @@ exports.addToCart = async (req, res, next) => {
           if (!cart) {
             const userCart = new Cart({
               userId: req.user._id,
-              products: new Array(1).fill(productId),
+              productIds: new Array(1).fill(productId),
               totalAmount: product.pricePerUnit,
             });
 
             userCart.save();
           } else {
             cart.totalAmount += product.pricePerUnit;
-            cart.products.push(productId);
+            cart.productIds.push(productId);
             cart.save();
           }
           res.status(200).send("Saved to cart");
@@ -66,8 +65,8 @@ exports.checkoutFromCart = (req, res, next) => {
   if (req.user) {
     Cart.findOne({ userId: req.user._id })
       .then((cart) => {
-        console.log("products: ", cart.products);
-        if (cart.products.length === 0 || cart.totalAmount === 0) {
+        console.log("productIds: ", cart.productIds);
+        if (cart.productIds.length === 0 || cart.totalAmount === 0) {
           res.status(409).send({
             error:
               "Empty cart. Please add items to your cart to place an order.",
@@ -75,12 +74,12 @@ exports.checkoutFromCart = (req, res, next) => {
         } else {
           const newOrder = new Order({
             orderedBy: req.user._id,
-            products: cart.products,
+            productIds: cart.productIds,
           });
           newOrder
             .save()
             .then((order) => {
-              cart.products = [];
+              cart.productIds = [];
               cart.totalAmount = 0;
               cart.save();
               console.log("order id: ", order._id);

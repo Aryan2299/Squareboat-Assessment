@@ -1,21 +1,26 @@
 import React from "react";
 import { v4 } from "uuid";
-import { getCart, getProducts } from "../services/requests";
+import { checkoutFromCart, getCart, getProducts } from "../services/requests";
 import ProductCard from "./ProductCard";
 
 const Cart = () => {
-  const [cart, setCart] = React.useState({});
+  const [totalAmount, setTotalAmount] = React.useState();
   const [productsInCart, setProductsInCart] = React.useState([]);
 
   React.useEffect(
     () =>
       getCart()
         .then((res) => {
-          setCart(res.data);
+          setTotalAmount(res.data.totalAmount);
           console.log("cart", res.data);
 
-          getProducts(res.data.products)
-            .then((res) => setProductsInCart(res.data))
+          console.log("prods: ", res.data.productIds);
+
+          getProducts(res.data.productIds)
+            .then((res) => {
+              setProductsInCart(res.data);
+              console.log("products in cart ", res.data);
+            })
             .catch((err) =>
               console.error("Error: Couldn't fetch products", err)
             );
@@ -24,8 +29,15 @@ const Cart = () => {
     []
   );
 
+  const checkout = () => {
+    checkoutFromCart()
+      .then((res) => console.log("checked out\n", res.data))
+      .catch((err) => console.error("Error: Couldn't checkout", err));
+  };
+
   return (
     <div>
+      <h1>Total: INR {totalAmount}</h1>
       {productsInCart.map((product) => {
         return (
           <li key={v4()}>
@@ -33,6 +45,9 @@ const Cart = () => {
           </li>
         );
       })}
+      <button type="button" onClick={checkout}>
+        Checkout
+      </button>
     </div>
   );
 };

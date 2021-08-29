@@ -6,9 +6,17 @@ const orderSchema = new Schema({
     type: mongoose.Types.ObjectId,
     required: true,
   },
-  products: {
-    type: [Object],
+  productIds: {
+    type: [mongoose.Types.ObjectId],
     required: true,
+  },
+  totalAmount: {
+    type: Number,
+    required: true,
+  },
+  orderedOn: {
+    type: Date,
+    default: Date.now,
   },
 });
 
