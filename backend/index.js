@@ -22,7 +22,6 @@ const productRoutes = require("./routes/products");
 app.use(authRoutes);
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
+app.use("/", (req, res, next) => res.status(200).send("Root"));
 
-app.listen(8080, () => {
-  console.log("Listening on port 8080...");
-});
+app.listen(process.env.PORT || 8080);

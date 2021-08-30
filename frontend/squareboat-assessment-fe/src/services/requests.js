@@ -1,22 +1,23 @@
 import axios from "axios";
+import { backendUrl } from "../utils/constants";
 
 export const sendLoginDetails = (payload) => {
   const { email, password } = payload;
-  return axios.post("http://localhost:8080/auth/login", {
+  return axios.post(`${backendUrl}/auth/login`, {
     email,
     password,
   });
 };
 
 export const logoutUser = (userId) => {
-  return axios.post("http://localhost:8080/auth/logout", {
+  return axios.post(`${backendUrl}/auth/logout`, {
     userId,
   });
 };
 
 export const sendSignUpDetails = (payload) => {
   const { name, email, password } = payload;
-  return axios.post("http://localhost:8080/auth/signup", {
+  return axios.post(`${backendUrl}/auth/signup`, {
     name,
     email,
     password,
@@ -24,39 +25,35 @@ export const sendSignUpDetails = (payload) => {
 };
 
 export const getAllProducts = () => {
-  return axios.get("http://localhost:8080/products");
+  return axios.get(`${backendUrl}/products`);
 };
 
 export const getAllOrders = (token) => {
-  console.log("token: ", token);
-  return axios.get(`http://localhost:8080/user/orders?token=${token}`);
+  return axios.get(`${backendUrl}/user/orders?token=${token}`);
 };
 
 export const getOrderDetails = (token, orderId) => {
-  console.log("token: ", token);
-  return axios.get(
-    `http://localhost:8080/user/orders/${orderId}?token=${token}`
-  );
+  return axios.get(`${backendUrl}/user/orders/${orderId}?token=${token}`);
 };
 
 export const getProducts = (productIds) => {
-  return axios.post("http://localhost:8080/products/get", { productIds });
+  return axios.post(`${backendUrl}/products/get`, { productIds });
 };
 
 export const getCart = (token) => {
-  return axios.get(`http://localhost:8080/user/cart?token=${token}`);
+  return axios.get(`${backendUrl}/user/cart?token=${token}`);
 };
 
 export const addToCart = (productId, token) => {
-  return axios.post(`http://localhost:8080/user/cart/add?token=${token}`, {
+  return axios.post(`${backendUrl}/user/cart/add?token=${token}`, {
     productId,
   });
 };
 
 export const emptyCart = (token) => {
-  return axios.get(`http://localhost:8080/user/cart/empty?token=${token}`);
+  return axios.get(`${backendUrl}/user/cart/empty?token=${token}`);
 };
 
 export const checkoutFromCart = (token) => {
-  return axios.get(`http://localhost:8080/user/cart/checkout?token=${token}`);
+  return axios.get(`${backendUrl}/user/cart/checkout?token=${token}`);
 };
