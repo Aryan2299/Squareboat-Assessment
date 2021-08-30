@@ -21,3 +21,7 @@ export const showOrderDetails = (orderId, history) => {
 export const redirectToCart = (history) => {
   history.push("/cart");
 };
+
+export const redirectToErrorPage = (history) => {
+  history.push("/error");
+};

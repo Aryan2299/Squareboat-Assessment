@@ -1,10 +1,10 @@
-.card {
+#product-card {
   width: 20rem;
   margin: 0.25rem;
   transition: all 0.2s ease;
 }
 
-.card:hover {
+#product-card:hover {
   width: 20.5rem;
   box-shadow: 2px 2px 2px grey;
   margin: 0rem;

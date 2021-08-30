@@ -14,6 +14,7 @@ router.get("/orders/:id", isAuth, ordersController.getOrder);
 router.get("/orders", isAuth, ordersController.getAllOrders);
 router.get("/cart", isAuth, cartController.getCart);
 router.post("/cart/add", isAuth, cartController.addToCart);
+router.get("/cart/empty", isAuth, cartController.emptyCart);
 router.get("/cart/checkout", isAuth, cartController.checkoutFromCart);
 
 module.exports = router;

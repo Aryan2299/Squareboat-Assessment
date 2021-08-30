@@ -1,0 +1,16 @@
+#orders-div {
+  width: 90vw;
+  margin: 10vh 5vw;
+  border: 1px solid blue;
+}
+
+.order-card {
+  border: 1px solid black;
+  transition: all 0.2s ease;
+}
+
+.order-card:hover {
+  margin: 10px 0px;
+  box-shadow: 2px 2px 2px gray;
+  cursor: pointer;
+}

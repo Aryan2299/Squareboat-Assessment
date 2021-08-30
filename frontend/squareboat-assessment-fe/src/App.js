@@ -9,6 +9,7 @@ import Cart from "./components/Cart";
 import Products from "./components/Products";
 import OrderDetails from "./components/OrderDetails";
 import Logout from "./components/Logout";
+import ErrorPage from "./components/ErrorPage";
 
 const USER_STATE = {
   user: {
@@ -37,9 +38,9 @@ function App() {
           className="navbar navbar-expand-lg navbar-light bg-light"
         >
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">
+            <Link className="navbar-brand" to="/">
               Home
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -90,6 +91,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/error">
+            <ErrorPage />
           </Route>
           <Route path="/">
             <Products />

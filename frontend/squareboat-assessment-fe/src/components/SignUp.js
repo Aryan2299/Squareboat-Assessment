@@ -4,7 +4,7 @@ import { redirectToLoginPage } from "../services/redirects";
 import { sendSignUpDetails } from "../services/requests";
 import "../styles/SignUp.css";
 import { UserContext } from "../UserContext";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "./ErrorPage";
 
 const SignUp = (props) => {
   //   const { emailMatcher, nameMatcher } = matcher;

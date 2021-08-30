@@ -63,6 +63,23 @@ exports.addToCart = async (req, res, next) => {
   }
 };
 
+exports.emptyCart = (req, res, next) => {
+  if (req.user) {
+    Cart.findOne({ userId: req.user._id })
+      .then((cart) => {
+        cart.productIds = [];
+        cart.totalAmount = 0;
+        cart.save();
+        res.status(200).send();
+      })
+      .catch((err) =>
+        res.status(500).send({ error: "Couldn't empty cart", details: err })
+      );
+  } else {
+    res.status(401).send();
+  }
+};
+
 exports.checkoutFromCart = (req, res, next) => {
   if (req.user) {
     Cart.findOne({ userId: req.user._id })

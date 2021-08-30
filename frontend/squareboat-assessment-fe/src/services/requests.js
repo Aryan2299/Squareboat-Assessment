@@ -53,6 +53,10 @@ export const addToCart = (productId, token) => {
   });
 };
 
+export const emptyCart = (token) => {
+  return axios.get(`http://localhost:8080/user/cart/empty?token=${token}`);
+};
+
 export const checkoutFromCart = (token) => {
   return axios.get(`http://localhost:8080/user/cart/checkout?token=${token}`);
 };

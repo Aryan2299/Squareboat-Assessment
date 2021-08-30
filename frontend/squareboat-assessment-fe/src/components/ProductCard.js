@@ -1,9 +1,9 @@
 import React from "react";
 import { addToCart } from "../services/requests";
 import { UserContext } from "../UserContext";
-import "../styles/ProductCard.css";
 import { useHistory } from "react-router-dom";
 import { redirectToCart, redirectToLoginPage } from "../services/redirects";
+import "../styles/ProductCard.css";
 
 const ProductCard = (props) => {
   const { title, description, photo, pricePerUnit } = props.product;
@@ -13,7 +13,7 @@ const ProductCard = (props) => {
   const history = useHistory();
 
   return (
-    <div className="card">
+    <div id="product-card" className="card">
       <img className="card-img-top" src={photo} alt="thumbnail" />
       <div className="card-body">
         <h1 className="card-title">{title}</h1>

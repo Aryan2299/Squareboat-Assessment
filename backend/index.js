@@ -45,19 +45,6 @@ app.use("/user", userRoutes);
 app.use("/secret", isAuth, (req, res) => res.send("secret"));
 app.use("/products", productRoutes);
 
-//seed data
-// Product.countDocuments().then((count) => {
-//   if (count === 0) {
-// addNewProduct({
-//   title: "Product",
-//   photo: "https://some-url.com/image?id=123",
-//   description: "product",
-
-//   pricePerUnit: 250,
-// });
-//   }
-// });
-
 app.listen(8080, () => {
   console.log("Listening on port 8080...");
 });

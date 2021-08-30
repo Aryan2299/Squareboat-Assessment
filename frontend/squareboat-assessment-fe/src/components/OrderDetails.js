@@ -6,8 +6,9 @@ import { redirectToLoginPage } from "../services/redirects";
 import { getOrderDetails, getProducts } from "../services/requests";
 import { UserContext } from "../UserContext";
 import ProductCard from "./ProductCard";
-// import "../styles/Products.css";
+import "../styles/Products.css";
 // import "../styles/ProductCards.css";
+import "../styles/ProductCard.css";
 
 const OrderDetails = () => {
   const orderId = useParams();
@@ -51,12 +52,12 @@ const OrderDetails = () => {
   }, [userContext, orderId]);
 
   return (
-    <div id="all-products">
+    <div>
       <h1>{orderDetails._id}</h1>
       <h4>{orderDetails.orderedOn}</h4>
       <h6>{orderDetails.totalAmount}</h6>
 
-      <ul>
+      <ul id="all-products">
         {productsOrdered.map((product) => {
           return (
             <li key={v4()}>

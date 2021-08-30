@@ -1,10 +1,10 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { v4 } from "uuid";
 import { redirectToLoginPage, showOrderDetails } from "../services/redirects";
 import { getAllOrders } from "../services/requests";
 import { UserContext } from "../UserContext";
-// import "../styles/Products.css";
-// import "../styles/ProductCards.css";
+import "../styles/Orders.css";
 
 const Orders = () => {
   const [orders, setOrders] = React.useState([]);
@@ -30,22 +30,24 @@ const Orders = () => {
       .catch((err) => console.log("Error: Couldn't get orders", err));
   }, [userContext]);
 
-  // const showOrderDetails = (orderId, history) => {
-  //   history.push(`/orders/${orderId}`);
-  // };
-
   return (
-    <div id="all-products">
-      <h1>
+    <div>
+      <ul id="orders-div">
         {orders.map((order) => {
           return (
-            <li onClick={() => showOrderDetails(order._id, history)}>
-              <h2>{order._id}</h2>
-              <h4>{order.orderedOn}</h4>
+            <li
+              className="order-card card-body"
+              key={v4()}
+              onClick={() => showOrderDetails(order._id, history)}
+            >
+              <h2 className="card-title">Order ID: {order._id}</h2>
+              <h4 className="card-subtitle mb-2 text-muted">
+                Ordered on: {order.orderedOn}
+              </h4>
             </li>
           );
         })}
-      </h1>
+      </ul>
     </div>
   );
 };
