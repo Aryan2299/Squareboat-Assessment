@@ -2,7 +2,7 @@ import React from "react";
 import { addToCart } from "../services/requests";
 import { UserContext } from "../UserContext";
 import { useHistory } from "react-router-dom";
-import {  redirectToLoginPage } from "../services/redirects";
+import { redirectToLoginPage } from "../services/redirects";
 import "../styles/ProductCard.css";
 
 const ProductCard = (props) => {
@@ -14,11 +14,20 @@ const ProductCard = (props) => {
 
   return (
     <div id="product-card" className="card">
-      <img className="card-img-top" src={photo} alt="thumbnail" />
+      <img
+        height="200"
+        width="315"
+        style={{
+          borderBottom: "1px solid grey",
+        }}
+        className="card-img-top"
+        src={photo}
+        alt="thumbnail"
+      />
       <div className="card-body">
-        <h1 className="card-title">{title}</h1>
-        <h2 className="card-text">{description}</h2>
-        <p>INR {pricePerUnit}</p>
+        <h3 className="card-title contained-body">{title}</h3>
+        <h5 className="card-text contained-body">{description}</h5>
+        <p style={{ margin: "20px 20px" }}>INR {pricePerUnit}</p>
         {!value ? (
           <button
             type="button"

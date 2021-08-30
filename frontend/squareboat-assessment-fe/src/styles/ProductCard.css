@@ -1,5 +1,7 @@
 #product-card {
   width: 20rem;
+  height: 25rem;
+
   margin: 0.25rem;
   transition: all 0.2s ease;
 }
@@ -8,4 +10,11 @@
   width: 20.5rem;
   box-shadow: 2px 2px 2px grey;
   margin: 0rem;
+}
+
+.contained-body {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 90%;
 }
