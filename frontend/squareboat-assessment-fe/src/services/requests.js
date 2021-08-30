@@ -1,5 +1,8 @@
 import axios from "axios";
-import { backendUrl } from "../utils/constants";
+import { constants } from "../utils/constants";
+import { validateSignUpDetails } from "./authService";
+
+const { backendUrl } = constants;
 
 export const sendLoginDetails = (payload) => {
   const { email, password } = payload;
@@ -17,11 +20,18 @@ export const logoutUser = (userId) => {
 
 export const sendSignUpDetails = (payload) => {
   const { name, email, password } = payload;
-  return axios.post(`${backendUrl}/auth/signup`, {
-    name,
-    email,
-    password,
-  });
+  const isValidUser = validateSignUpDetails(name, email, password);
+  if (isValidUser) {
+    return axios.post(`${backendUrl}/auth/signup`, {
+      name,
+      email,
+      password,
+    });
+  }
+
+  throw new Error(
+    "Invalid input. Make sure password contains atleast 8 characters and email is valid."
+  );
 };
 
 export const getAllProducts = () => {

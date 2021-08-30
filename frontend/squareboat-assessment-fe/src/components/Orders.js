@@ -17,43 +17,38 @@ const Orders = () => {
   const history = useHistory();
 
   React.useEffect(() => {
-    console.log("userContext", userContext);
-    if (userContext.user.email === null) {
-      redirectToLoginPage(history);
-    }
     getAllOrders(userContext.user.token)
       .then((res) => {
-        console.log("response: ", res);
         if (res.status === 200) {
           setOrders(res.data);
-          console.log("orders: ", res.data);
-        } else if (res.status === 401) {
-          redirectToLoginPage(history);
         }
       })
       .catch((err) => {
-        console.log("Error: Couldn't get orders", err);
+        console.error("Error: Couldn't get orders", err);
+        if (err.response.status === 401) {
+          redirectToLoginPage(history);
+        } else if (err.response.status === 500) {
+          redirectToErrorPage(history);
+        }
       });
   }, [userContext]);
 
   return (
-    <div>
-      <ul id="orders-div">
-        {orders.map((order) => {
-          return (
-            <li
-              className="order-card card-body"
-              key={v4()}
-              onClick={() => showOrderDetails(order._id, history)}
-            >
-              <h2 className="card-title">Order ID: {order._id}</h2>
-              <h4 className="card-subtitle mb-2 text-muted">
-                Ordered on: {order.orderedOn}
-              </h4>
-            </li>
-          );
-        })}
-      </ul>
+    <div id="orders-div">
+      {orders.map((order) => {
+        return (
+          <li
+            className="order-card card-body"
+            key={v4()}
+            onClick={() => showOrderDetails(order._id, history)}
+          >
+            <h2 className="card-title">Order ID: {order._id}</h2>
+            <h4 className="card-subtitle mb-2 text-muted">
+              Ordered on: {new Date(order.orderedOn).toDateString()}
+            </h4>
+          </li>
+        );
+      })}
     </div>
   );
 };

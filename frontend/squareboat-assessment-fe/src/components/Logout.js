@@ -1,6 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { redirectToLoginPage } from "../services/redirects";
+import {
+  redirectToErrorPage,
+  redirectToLoginPage,
+} from "../services/redirects";
 import { logoutUser } from "../services/requests";
 import { UserContext } from "../UserContext";
 
@@ -13,7 +16,7 @@ const Logout = () => {
       onClick={() =>
         logoutUser(userContext.user._id)
           .then((res) => {
-            console.log(res.data);
+            alert(res.data);
             userContext.user = {
               _id: null,
               name: null,
@@ -22,7 +25,10 @@ const Logout = () => {
             };
             redirectToLoginPage(history);
           })
-          .catch((err) => console.error("Error: Couldn't logout user", err))
+          .catch((err) => {
+            console.error("Error: Couldn't logout user", err);
+            redirectToErrorPage(history);
+          })
       }
     >
       Logout

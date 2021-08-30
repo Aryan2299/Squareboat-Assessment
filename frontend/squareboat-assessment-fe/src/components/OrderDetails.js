@@ -22,14 +22,10 @@ const OrderDetails = () => {
   const history = useHistory();
 
   React.useEffect(() => {
-    if (userContext.user.email === null) {
-      redirectToLoginPage(history);
-    }
     getOrderDetails(userContext.user.token, orderId.id)
       .then((res) => {
         if (res.status === 200) {
           setOrderDetails(res.data);
-          console.log("order details: ", res.data);
 
           getProducts(res.data.productIds)
             .then((res) => {
@@ -44,15 +40,16 @@ const OrderDetails = () => {
               console.error("Error: Couldn't fetch products", err);
               redirectToErrorPage(history);
             });
-        } else if (res.status === 401) {
-          redirectToLoginPage(history);
         }
       })
       .catch((err) => {
         console.error("Error: Couldn't fetch order details", err);
-        redirectToErrorPage(history);
+        if (err.response.status === 401) {
+          redirectToLoginPage(history);
+        } else if (err.response.status === 500) {
+          redirectToErrorPage(history);
+        }
       });
-    console.log("orderId: ", orderId.id);
   }, [userContext, orderId]);
 
   return (

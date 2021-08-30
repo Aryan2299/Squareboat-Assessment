@@ -5,6 +5,7 @@ import { addQuantitiesToProducts } from "../services/productService";
 import {
   redirectToErrorPage,
   redirectToLoginPage,
+  redirectToOrdersPage,
 } from "../services/redirects";
 import {
   checkoutFromCart,
@@ -31,9 +32,6 @@ const Cart = () => {
       .then(async (res) => {
         if (res.status === 200) {
           setTotalAmount(res.data.totalAmount);
-          console.log("cart", res.data);
-
-          console.log("prods: ", res.data.productIds);
 
           await getProducts(res.data.productIds)
             .then((res) => {
@@ -47,12 +45,12 @@ const Cart = () => {
             .catch((err) => {
               console.error("Error: Couldn't fetch products", err);
             });
-        } else if (res.status === 401) {
-          redirectToLoginPage(history);
-        } else if (res.status === 409) {
         }
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          redirectToLoginPage(history);
+        }
         console.error("Error: Couldn't fetch cart", err);
       });
   }, [userContext]);
@@ -60,19 +58,21 @@ const Cart = () => {
   const checkout = () => {
     checkoutFromCart(userContext.user.token)
       .then((res) => {
-        console.log("checked out\n", res.data);
-        emptyCart(userContext.user.token)
-          .then((res) => {
-            if (res.status === 200) {
-              setTotalAmount(0);
-              setProductsInCart([]);
-            }
-          })
-          .catch((err) => {
-            console.error("Error: Couldn't empty cart", err);
-          });
+        if (res.status === 200) {
+          alert(`Order placed successfully.\nOrder ID: ${res.data}`);
+          redirectToOrdersPage(history);
+        }
       })
-      .catch((err) => console.error("Error: Couldn't checkout", err));
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            redirectToLoginPage(history);
+          } else if (err.response.status === 409) {
+            alert(err.response.data.error);
+          }
+        }
+        console.error("Error: Couldn't checkout", err);
+      });
   };
 
   return (
@@ -88,7 +88,14 @@ const Cart = () => {
                 setProductsInCart([]);
               }
             })
-            .catch((err) => console.error("Error: Couldn't empty cart", err))
+            .catch((err) => {
+              console.error("Error: Couldn't empty cart", err);
+              if (err.response.status === 401) {
+                redirectToLoginPage(history);
+              } else if (err.response.status === 500) {
+                redirectToErrorPage(history);
+              }
+            })
         }
       >
         Empty Cart

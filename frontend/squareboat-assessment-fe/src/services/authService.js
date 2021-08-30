@@ -9,5 +9,5 @@ export const validateSignUpDetails = (name, email, password) => {
 
   const isPasswordValid = password.length > 7;
 
-  return isEmailValid && isNameValid && isPasswordValid ? "valid" : "invalid";
+  return isEmailValid && isNameValid && isPasswordValid ? true : false;
 };
