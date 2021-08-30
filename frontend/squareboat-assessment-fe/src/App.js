@@ -11,21 +11,31 @@ import OrderDetails from "./components/OrderDetails";
 import Logout from "./components/Logout";
 import ErrorPage from "./components/ErrorPage";
 
-const USER_STATE = {
-  user: {
-    _id: null,
-    name: null,
-    email: null,
-    token: null,
-  },
-  setUser: function (user) {
-    this.user = user;
-  },
-};
+// const USER_STATE = {
+//   user: {
+//     _id: null,
+//     name: null,
+//     email: null,
+//     token: null,
+//   },
+//   setUser: function (user) {
+//     this.user = user;
+//   },
+// };
 
 function UserProvider({ children }) {
+  const [user, setUser] = React.useState({
+    user: {
+      _id: null,
+      name: null,
+      email: null,
+      token: null,
+    },
+  });
   return (
-    <UserContext.Provider value={USER_STATE}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user: user, setUser: setUser }}>
+      {children}
+    </UserContext.Provider>
   );
 }
 
@@ -52,28 +62,35 @@ function App() {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/orders">
-                    Orders
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/cart">
-                    Cart
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">
-                    Login/Sign Up
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Logout />
-                </li>
-              </ul>
-            </div>
+            <UserContext.Consumer>
+              {(value) => (
+                <div className="collapse navbar-collapse" id="navbarNav">
+                  <ul className="navbar-nav">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/orders">
+                        Orders
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/cart">
+                        Cart
+                      </Link>
+                    </li>
+                    {!value.user.email ? (
+                      <li className="nav-item">
+                        <Link className="nav-link" to="/login">
+                          Login/Sign Up
+                        </Link>
+                      </li>
+                    ) : (
+                      <li className="nav-item">
+                        <Logout />
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
+            </UserContext.Consumer>
           </div>
         </nav>
         <Switch>

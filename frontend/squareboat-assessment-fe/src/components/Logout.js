@@ -19,12 +19,12 @@ const Logout = () => {
         logoutUser(userContext.user._id)
           .then((res) => {
             alert(res.data);
-            userContext.user = {
+            userContext.setUser({
               _id: null,
               name: null,
               email: null,
               token: null,
-            };
+            });
             redirectToLoginPage(history);
           })
           .catch((err) => {
