@@ -24,6 +24,8 @@
 ## Assignment Related Assumptions
     - User can only add one product to cart at a time
     - Tokens expires in an hour, but there are no sessions on fronted (user gets logged out on page refresh)
+    - Products have unlimited quantity - can add as many as you like to the cart
+    - Laid less emphasis on UI (basic styling) to focus on architecture
     - Used context API (React) as the application flow wasn't very complex
     - Pushed code for both backend and frontend collectively for easy navigation, but deployed both on Heroku separately
 
