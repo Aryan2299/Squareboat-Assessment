@@ -2,7 +2,10 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { v4 } from "uuid";
 import { addQuantitiesToProducts } from "../services/productService";
-import { redirectToLoginPage } from "../services/redirects";
+import {
+  redirectToErrorPage,
+  redirectToLoginPage,
+} from "../services/redirects";
 import {
   checkoutFromCart,
   emptyCart,
@@ -12,7 +15,6 @@ import {
 import { UserContext } from "../UserContext";
 import ProductCard from "./ProductCard";
 import "../styles/Products.css";
-// import "../styles/ProductCards.css";
 
 const Cart = () => {
   const [totalAmount, setTotalAmount] = React.useState();
@@ -42,15 +44,17 @@ const Cart = () => {
                 )
               );
             })
-            .catch((err) =>
-              console.error("Error: Couldn't fetch products", err)
-            );
+            .catch((err) => {
+              console.error("Error: Couldn't fetch products", err);
+            });
         } else if (res.status === 401) {
           redirectToLoginPage(history);
         } else if (res.status === 409) {
         }
       })
-      .catch((err) => console.error("Error: Couldn't fetch cart", err));
+      .catch((err) => {
+        console.error("Error: Couldn't fetch cart", err);
+      });
   }, [userContext]);
 
   const checkout = () => {
@@ -64,7 +68,9 @@ const Cart = () => {
               setProductsInCart([]);
             }
           })
-          .catch((err) => console.error("Error: Couldn't empty cart", err));
+          .catch((err) => {
+            console.error("Error: Couldn't empty cart", err);
+          });
       })
       .catch((err) => console.error("Error: Couldn't checkout", err));
   };

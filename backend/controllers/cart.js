@@ -3,8 +3,6 @@ const Cart = mongoose.model("cart");
 const Product = mongoose.model("products");
 const Order = mongoose.model("orders");
 
-const orderService = require("../services/product");
-
 exports.getCart = (req, res, next) => {
   if (req.user) {
     console.log("Fetching cart for ", req.user.email);
@@ -37,7 +35,6 @@ exports.addToCart = async (req, res, next) => {
     const productId = req.body.productId;
     Product.findById(productId)
       .then((product) => {
-        console.log("product: ", product);
         Cart.findOne({ userId: req.user._id }).then((cart) => {
           if (!cart) {
             const userCart = new Cart({
@@ -115,7 +112,7 @@ exports.checkoutFromCart = (req, res, next) => {
       .catch((err) =>
         res
           .status(500)
-          .send({ error: "Coudln't checkout from cart", details: err })
+          .send({ error: "Couldn't checkout from cart", details: err })
       );
   } else {
     res.status(401).send();

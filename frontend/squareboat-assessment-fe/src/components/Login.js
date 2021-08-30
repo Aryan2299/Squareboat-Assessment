@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import {
+  redirectToErrorPage,
   redirectToHomePage,
   redirectToSignUpPage,
 } from "../services/redirects";
@@ -8,7 +9,7 @@ import { sendLoginDetails } from "../services/requests";
 import "../styles/Login.css";
 import { UserContext } from "../UserContext";
 
-const Login = (props) => {
+const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -38,7 +39,10 @@ const Login = (props) => {
           redirectToHomePage(history);
         }
       })
-      .catch((err) => console.error("Error: Couldn't login", err));
+      .catch((err) => {
+        console.error("Error: Couldn't login", err);
+        redirectToErrorPage(history);
+      });
   };
 
   return (

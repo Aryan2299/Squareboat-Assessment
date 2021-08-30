@@ -3,9 +3,12 @@ import { getAllProducts } from "../services/requests";
 import { v4 } from "uuid";
 import ProductCard from "./ProductCard";
 import "../styles/Products.css";
+import { useHistory } from "react-router-dom";
+import { redirectToErrorPage } from "../services/redirects";
 
 const Products = () => {
   const [products, setProducts] = React.useState([]);
+  const history = useHistory();
 
   React.useEffect(
     () =>
@@ -14,7 +17,10 @@ const Products = () => {
           setProducts(res.data);
           console.log("products: ", res.data);
         })
-        .catch((err) => console.error("Error: Couldn't fetch products", err)),
+        .catch((err) => {
+          console.error("Error: Couldn't fetch products", err);
+          redirectToErrorPage(history);
+        }),
     []
   );
   return (

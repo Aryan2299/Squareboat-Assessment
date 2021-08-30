@@ -10,6 +10,7 @@ import Products from "./components/Products";
 import OrderDetails from "./components/OrderDetails";
 import Logout from "./components/Logout";
 import ErrorPage from "./components/ErrorPage";
+import cookie from "react-cookies";
 
 const USER_STATE = {
   user: {
@@ -70,7 +71,7 @@ function App() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Logout />
+                  <Logout className="nav-link" />
                 </li>
               </ul>
             </div>

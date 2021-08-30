@@ -1,14 +1,15 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { redirectToLoginPage } from "../services/redirects";
+import {
+  redirectToErrorPage,
+  redirectToLoginPage,
+} from "../services/redirects";
 import { sendSignUpDetails } from "../services/requests";
 import "../styles/SignUp.css";
 import { UserContext } from "../UserContext";
 import ErrorAlert from "./ErrorPage";
 
-const SignUp = (props) => {
-  //   const { emailMatcher, nameMatcher } = matcher;
-
+const SignUp = () => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -72,23 +73,19 @@ const SignUp = (props) => {
           console.log("data: ", res.data);
         }
       })
-      .catch((err) => console.error("Error: Couldn't login", err));
+      .catch((err) => {
+        console.error("Error: Couldn't login", err);
+        redirectToErrorPage(history);
+      });
   };
 
   return (
     <div id="login-form" className="card text-white bg-dark mb-3 row">
-      {showInvalidEmailMsg.value &&
-      showPasswordsDoNotMatchMsg.value ? null : !showInvalidEmailMsg.value ? (
-        <ErrorAlert errorMessage={showInvalidEmailMsg.message} />
-      ) : (
-        <ErrorAlert errorMessage={showPasswordsDoNotMatchMsg.message} />
-      )}
-
       <input
         className="form-control"
         type="last name"
         aria-label="default input example"
-        placeholder="text"
+        placeholder="name"
         onChange={(e) => updateName(e.target.value)}
       />
       <input

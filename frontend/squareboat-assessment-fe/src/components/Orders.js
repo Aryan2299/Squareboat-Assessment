@@ -1,7 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { v4 } from "uuid";
-import { redirectToLoginPage, showOrderDetails } from "../services/redirects";
+import {
+  redirectToErrorPage,
+  redirectToLoginPage,
+  showOrderDetails,
+} from "../services/redirects";
 import { getAllOrders } from "../services/requests";
 import { UserContext } from "../UserContext";
 import "../styles/Orders.css";
@@ -27,7 +31,9 @@ const Orders = () => {
           redirectToLoginPage(history);
         }
       })
-      .catch((err) => console.log("Error: Couldn't get orders", err));
+      .catch((err) => {
+        console.log("Error: Couldn't get orders", err);
+      });
   }, [userContext]);
 
   return (

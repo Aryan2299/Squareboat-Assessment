@@ -1,13 +1,15 @@
 import React from "react";
-import { Redirect, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { v4 } from "uuid";
 import { addQuantitiesToProducts } from "../services/productService";
-import { redirectToLoginPage } from "../services/redirects";
+import {
+  redirectToLoginPage,
+  redirectToErrorPage,
+} from "../services/redirects";
 import { getOrderDetails, getProducts } from "../services/requests";
 import { UserContext } from "../UserContext";
 import ProductCard from "./ProductCard";
 import "../styles/Products.css";
-// import "../styles/ProductCards.css";
 import "../styles/ProductCard.css";
 
 const OrderDetails = () => {
@@ -38,16 +40,18 @@ const OrderDetails = () => {
                 )
               );
             })
-            .catch((err) =>
-              console.error("Error: Couldn't fetch products", err)
-            );
+            .catch((err) => {
+              console.error("Error: Couldn't fetch products", err);
+              redirectToErrorPage(history);
+            });
         } else if (res.status === 401) {
           redirectToLoginPage(history);
         }
       })
-      .catch((err) =>
-        console.error("Error: Couldn't fetch order details", err)
-      );
+      .catch((err) => {
+        console.error("Error: Couldn't fetch order details", err);
+        redirectToErrorPage(history);
+      });
     console.log("orderId: ", orderId.id);
   }, [userContext, orderId]);
 

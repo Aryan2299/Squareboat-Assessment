@@ -31,26 +31,3 @@ exports.getOrder = (req, res, next) => {
     res.status(401).send();
   }
 };
-
-exports.placeNewOrder = (req, res, next) => {
-  if (req.user) {
-    const newProductIds = req.body.productIds;
-
-    const totalAmount = req.body.totalAmount;
-
-    const newOrder = new Order({
-      orderedBy: req.user._id,
-      productIds: newProductIds,
-      totalAmount,
-    });
-
-    newOrder
-      .save()
-      .then((order) => res.status(200).send(order._id))
-      .catch((err) =>
-        res.status(500).send({ error: "Couldn't place order", details: err })
-      );
-  } else {
-    res.status(401).send();
-  }
-};
