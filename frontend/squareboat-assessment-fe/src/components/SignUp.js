@@ -6,7 +6,7 @@ import {
   redirectToLoginPage,
 } from "../services/redirects";
 import { sendSignUpDetails } from "../services/requests";
-import "../styles/SignUp.css";
+import "../styles/Login.css";
 import { UserContext } from "../UserContext";
 
 const SignUp = () => {
@@ -85,45 +85,46 @@ const SignUp = () => {
           Passwords do not match
         </div>
       ) : null}
-      <input
-        className="form-control"
-        type="last name"
-        aria-label="default input example"
-        placeholder="name"
-        onChange={(e) => updateName(e.target.value)}
-      />
-      <input
-        className="form-control"
-        type="email"
-        aria-label="default input example"
-        placeholder="email"
-        onChange={(e) => updateEmail(e.target.value)}
-      />
-      <input
-        className="form-control"
-        type="password"
-        aria-label="default input example"
-        placeholder="password"
-        onChange={(e) => updatePassword(e.target.value)}
-      />
-      <input
-        className="form-control"
-        type="password"
-        aria-label="default input example"
-        placeholder="confirm password"
-        onChange={(e) => updateConfirmPassword(e.target.value)}
-      />
+      <div className="row" id="input-div">
+        <input
+          className="form-control"
+          type="last name"
+          aria-label="default input example"
+          placeholder="name"
+          onChange={(e) => updateName(e.target.value)}
+        />
+        <input
+          className="form-control"
+          type="email"
+          aria-label="default input example"
+          placeholder="email"
+          onChange={(e) => updateEmail(e.target.value)}
+        />
+        <input
+          className="form-control"
+          type="password"
+          aria-label="default input example"
+          placeholder="password (at least 8 characters)"
+          onChange={(e) => updatePassword(e.target.value)}
+        />
+        <input
+          className="form-control"
+          type="password"
+          aria-label="default input example"
+          placeholder="confirm password"
+          onChange={(e) => updateConfirmPassword(e.target.value)}
+        />
+      </div>
       <div className="row">
-        <button type="button" className="btn btn-light" onClick={getUser}>
-          Sign Up
-        </button>
-
         <button
           className="btn btn-primary col"
           type="button"
           onClick={() => redirectToLoginPage(history)}
         >
           Login
+        </button>
+        <button type="button" className="btn btn-light col" onClick={getUser}>
+          Sign Up
         </button>
       </div>
     </div>

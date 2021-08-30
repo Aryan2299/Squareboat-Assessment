@@ -11,8 +11,10 @@ const Logout = () => {
   const userContext = React.useContext(UserContext);
   const history = useHistory();
 
-  return userContext.user.email !== null ? (
-    <button
+  return (
+    <a
+      className="btn btn-outline-light"
+      style={{ right: 10, position: "absolute" }}
       onClick={() =>
         logoutUser(userContext.user._id)
           .then((res) => {
@@ -32,7 +34,7 @@ const Logout = () => {
       }
     >
       Logout
-    </button>
-  ) : null;
+    </a>
+  );
 };
 export default Logout;

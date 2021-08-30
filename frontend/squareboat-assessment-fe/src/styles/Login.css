@@ -1,8 +1,16 @@
 #login-form {
   display: flex;
-  justify-content: stretch;
-  align-items: stretch;
-  padding: 100px 50px;
-  width: 60%;
-  margin: 10% 20%;
+  justify-content: center;
+  align-items: center;
+  padding: 75px 50px;
+  width: 50%;
+  margin: 10% 25%;
+}
+
+#input-div {
+  margin-bottom: 50px;
+}
+
+#input-div input {
+  margin-top: 10px;
 }

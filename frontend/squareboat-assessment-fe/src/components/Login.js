@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { validateEmail } from "../services/authService";
 import {
   redirectToErrorPage,
   redirectToHomePage,
@@ -25,54 +26,62 @@ const Login = () => {
   const history = useHistory();
 
   const loginUser = () => {
-    sendLoginDetails({ email: email, password: password })
-      .then((res) => {
-        if (res.status === 200) {
-          const { _id, name, email, token } = res.data;
-          console.log("user: ", res.data);
-          userContext.setUser({
-            _id: _id,
-            name: name,
-            email: email,
-            token: token,
-          });
-          redirectToHomePage(history);
-        }
-      })
-      .catch((err) => {
-        console.error("Error: Couldn't login", err);
-        redirectToErrorPage(history);
-      });
+    try {
+      sendLoginDetails({ email: email, password: password })
+        .then((res) => {
+          if (res.status === 200) {
+            const { _id, name, email, token } = res.data;
+            console.log("user: ", res.data);
+            userContext.setUser({
+              _id: _id,
+              name: name,
+              email: email,
+              token: token,
+            });
+            redirectToHomePage(history);
+          }
+        })
+        .catch((err) => {
+          console.error("Error: Couldn't login", err);
+          redirectToErrorPage(history);
+        });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
     <div id="login-form" className="card text-white bg-dark mb-3 row">
-      <input
-        className="form-control"
-        type="email"
-        aria-label="default input example"
-        placeholder="email"
-        onChange={(e) => updateEmail(e.target.value)}
-      />
+      <div className="row" id="input-div">
+        <input
+          className="form-control"
+          type="email"
+          aria-label="default input example"
+          placeholder="email"
+          onChange={(e) => updateEmail(e.target.value)}
+        />
 
-      <input
-        className="form-control"
-        type="password"
-        aria-label="default input example"
-        placeholder="password"
-        onChange={(e) => updatePassword(e.target.value)}
-      />
-      <div ame="row">
+        <input
+          className="form-control"
+          type="password"
+          aria-label="default input example"
+          placeholder="password"
+          onChange={(e) => updatePassword(e.target.value)}
+        />
+      </div>
+      <div style={{ width: "100%" }}>
         <button
           type="button"
           className="btn btn-light"
+          style={{ width: "50%" }}
           onClick={() => redirectToSignUpPage(history)}
         >
           Sign Up
         </button>
 
         <button
-          className="btn btn-primary col"
+          className="btn btn-primary"
+          style={{ width: "50%" }}
           type="button"
           onClick={loginUser}
         >

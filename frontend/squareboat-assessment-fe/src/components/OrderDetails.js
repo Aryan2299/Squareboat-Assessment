@@ -53,10 +53,10 @@ const OrderDetails = () => {
   }, [userContext, orderId]);
 
   return (
-    <div>
-      <h1>{orderDetails._id}</h1>
-      <h4>{orderDetails.orderedOn}</h4>
-      <h6>{orderDetails.totalAmount}</h6>
+    <div style={{ marginTop: "25vh", textAlign: "center" }}>
+      <h1>Order ID: {orderDetails._id}</h1>
+      <h4>Ordered on: {new Date(orderDetails.orderedOn).toDateString()}</h4>
+      <h4>Total Amount: INR {orderDetails.totalAmount}</h4>
 
       <ul id="all-products">
         {productsOrdered.map((product) => {

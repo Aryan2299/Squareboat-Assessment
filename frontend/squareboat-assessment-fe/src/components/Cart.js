@@ -16,10 +16,12 @@ import {
 import { UserContext } from "../UserContext";
 import ProductCard from "./ProductCard";
 import "../styles/Products.css";
+import "../styles/Miscellaneous.css";
 
 const Cart = () => {
   const [totalAmount, setTotalAmount] = React.useState();
   const [productsInCart, setProductsInCart] = React.useState([]);
+  const [hasNoProductsInCart, setHasNoProductsInCart] = React.useState(false);
 
   const userContext = React.useContext(UserContext);
   const history = useHistory();
@@ -41,6 +43,9 @@ const Cart = () => {
                   res.data.products
                 )
               );
+              if (res.data.products.length < 1) {
+                setHasNoProductsInCart(true);
+              }
             })
             .catch((err) => {
               console.error("Error: Couldn't fetch products", err);
@@ -75,11 +80,15 @@ const Cart = () => {
       });
   };
 
-  return (
+  return hasNoProductsInCart ? (
+    <div id="empty-response-div">
+      <h2>No products in cart</h2>
+    </div>
+  ) : (
     <div id="all-products">
-      <h1>Total: INR {totalAmount}</h1>
       <button
         type="button"
+        id="empty-cart-btn"
         onClick={() =>
           emptyCart(userContext.user.token)
             .then((res) => {
@@ -113,9 +122,14 @@ const Cart = () => {
           </li>
         );
       })}
-      <button type="button" onClick={checkout}>
-        Checkout
-      </button>
+      <div id="checkout-div">
+        <h4 style={{ color: "white", margin: "10px" }}>
+          Total: INR {totalAmount}
+        </h4>
+        <button type="button" onClick={checkout}>
+          Checkout
+        </button>
+      </div>
     </div>
   );
 };

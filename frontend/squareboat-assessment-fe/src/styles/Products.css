@@ -4,4 +4,7 @@
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
+  margin: 35vh 10px;
+  z-index: 0;
+  
 }

@@ -8,6 +8,21 @@ body {
   width: 100vw;
 }
 
+button {
+  background-color: white;
+  color: black;
+  border: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
 li {
   list-style: none;
 }

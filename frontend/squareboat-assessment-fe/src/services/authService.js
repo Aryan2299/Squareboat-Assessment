@@ -11,3 +11,7 @@ export const validateSignUpDetails = (name, email, password) => {
 
   return isEmailValid && isNameValid && isPasswordValid ? true : false;
 };
+
+export const validateEmail = (email) => {
+  return email.match(emailMatcher);
+};

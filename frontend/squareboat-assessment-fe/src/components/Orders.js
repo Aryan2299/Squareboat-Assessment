@@ -9,9 +9,11 @@ import {
 import { getAllOrders } from "../services/requests";
 import { UserContext } from "../UserContext";
 import "../styles/Orders.css";
+import "../styles/Miscellaneous.css";
 
 const Orders = () => {
   const [orders, setOrders] = React.useState([]);
+  const [hasNoOrders, setHasNoOrders] = React.useState(false);
 
   const userContext = React.useContext(UserContext);
   const history = useHistory();
@@ -21,6 +23,9 @@ const Orders = () => {
       .then((res) => {
         if (res.status === 200) {
           setOrders(res.data);
+          if (res.data.length < 1) {
+            setHasNoOrders(true);
+          }
         }
       })
       .catch((err) => {
@@ -33,7 +38,11 @@ const Orders = () => {
       });
   }, [userContext]);
 
-  return (
+  return hasNoOrders ? (
+    <div id="empty-response-div">
+      <h2>No orders yet</h2>
+    </div>
+  ) : (
     <div id="orders-div">
       {orders.map((order) => {
         return (

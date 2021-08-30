@@ -35,7 +35,7 @@ function App() {
       <Router>
         <nav
           id="navbar"
-          className="navbar navbar-expand-lg navbar-light bg-light"
+          className="navbar navbar-expand-lg navbar-dark bg-primary"
         >
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
@@ -55,11 +55,6 @@ function App() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/login">
-                    Login/Sign Up
-                  </Link>
-                </li>
-                <li className="nav-item">
                   <Link className="nav-link" to="/orders">
                     Orders
                   </Link>
@@ -70,7 +65,12 @@ function App() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Logout className="nav-link" />
+                  <Link className="nav-link" to="/login">
+                    Login/Sign Up
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Logout />
                 </li>
               </ul>
             </div>
