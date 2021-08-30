@@ -69,7 +69,6 @@ const SignUp = () => {
           })
           .catch((err) => {
             console.error("Error: Couldn't login", err);
-
             redirectToErrorPage(history);
           });
       }

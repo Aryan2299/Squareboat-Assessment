@@ -11,18 +11,6 @@ import OrderDetails from "./components/OrderDetails";
 import Logout from "./components/Logout";
 import ErrorPage from "./components/ErrorPage";
 
-// const USER_STATE = {
-//   user: {
-//     _id: null,
-//     name: null,
-//     email: null,
-//     token: null,
-//   },
-//   setUser: function (user) {
-//     this.user = user;
-//   },
-// };
-
 function UserProvider({ children }) {
   const [user, setUser] = React.useState({
     user: {

@@ -15,7 +15,6 @@ const Products = () => {
       getAllProducts()
         .then((res) => {
           setProducts(res.data);
-          console.log("products: ", res.data);
         })
         .catch((err) => {
           console.error("Error: Couldn't fetch products", err);

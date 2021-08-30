@@ -12,7 +12,7 @@ const Logout = () => {
   const history = useHistory();
 
   return (
-    <a
+    <button
       className="btn btn-outline-light"
       style={{ right: 10, position: "absolute" }}
       onClick={() =>
@@ -34,7 +34,7 @@ const Logout = () => {
       }
     >
       Logout
-    </a>
+    </button>
   );
 };
 export default Logout;

@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { validateEmail } from "../services/authService";
 import {
   redirectToErrorPage,
   redirectToHomePage,
@@ -31,7 +30,6 @@ const Login = () => {
         .then((res) => {
           if (res.status === 200) {
             const { _id, name, email, token } = res.data;
-            console.log("user: ", res.data);
             userContext.setUser({
               _id: _id,
               name: name,
