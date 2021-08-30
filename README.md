@@ -10,9 +10,8 @@
 
 ## Links
 
-  - Frontend (deployed) - https://agile-brook-30814.herokuapp.com/login
-  - Backend (deployed) - https://stormy-scrubland-59816.herokuapp.com
-
+    - Frontend (deployed) - https://agile-brook-30814.herokuapp.com/login
+    - Backend (deployed) - https://stormy-scrubland-59816.herokuapp.com
 
 
 ## Database Mappings
@@ -22,7 +21,6 @@
     - Product <-> Order (many-to-many)
 
 
-
 ## Assignment Related Assumptions
     - User can only add one product to cart at a time
     - Tokens expires in an hour, but there are no sessions on fronted (user gets logged out on page refresh)
@@ -30,6 +28,14 @@
     - Pushed code for both backend and frontend collectively for easy navigation, but deployed both on Heroku separately
 
 
+## Running Instructions
+  - Frontend
+      - **npm install** (created node_modules for dependencies)
+      - **npm start** (port 3000)
+  - Backend
+      - **npm install** (created node_modules for dependencies)
+      - **npm start** (port 8080)
+      
 
 # API Docs
 
